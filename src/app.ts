@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-redeclare */
 
 showHello('greeting', 'TypeScript');
@@ -191,6 +192,91 @@ function getPropery(book: Book, prop: BookPropertis): any {
     return typeof valye === 'function' ? valye.name : valye;
 }
 
+abstract class ReferenceItem {
+    // title: srting;
+    // year: number;
+
+    // constructor(newTitle: string, newYear: number) {
+    //     console.log('Creating a new ReferenceItem...');
+    //     this.title = newTitle;
+    //     this.year = newYear;
+    // }
+
+    #id: number;
+
+    private _publisher: srting;
+
+    get publisher(): string {
+        return this._publisher.toUpperCase();
+    }
+
+    set publisher(newPublisher: string) {
+        this._publisher = newPublisher;
+    }
+
+    static department: string = 'Research Dep.';
+
+    constructor(
+        id: number,
+        public title: string,
+        protected yesr: number
+    ) {
+        console.log('Creating a new ReferenceItem...');
+        this.#id = id;
+    }
+
+    printItem(): void {
+        console.log(`${this.title} was puplished in ${this.year}`);
+        console.log(ReferenceItem.department);
+        console.log(Object.getPrototypeOF(this).constructor.department);
+    }
+
+    getID(): number {
+        return this.#id;
+    }
+
+    abstract printCitation(): void;
+}
+
+class Encyclopedia extends ReferenceItem {
+    constructor(
+        id: number,
+        public title: string,
+        private yesr: number,
+        public edition: number
+    ) {
+        super(id, title, year);
+    }
+
+    override printItem(): void {
+        super.printItem();
+        console.log(`Edition: ${this.edition} (${this.year})`);
+    }
+
+    printCitation(): void {
+        console.log(`${this.title} - ${this.year}`);
+    }
+}
+
+// interface A {
+//     a: number;
+// }
+
+class UniversityLibrarian implements Librarian /* A */ {
+    name: string;
+    email: string;
+    department: string;
+
+    // a: number = 1;
+
+    assistCustomer (customer: string, booktitle: string): void {
+        console.log(`${this.name} is assisting ${custName} with book ${booktitle}`);
+    }
+
+}
+
+
+
 // ========================================================
 // Task 02.01
 // console.log(getAllBooks());
@@ -290,3 +376,23 @@ function getPropery(book: Book, prop: BookPropertis): any {
 // console.log(getPropery(myBook, 'markDamaged'));
 // console.log(getPropery(myBook, 'isbn'));
 
+// Task 05.01
+// const ref = new ReferenceItem(1, 'Learn TypeScript', 2022);
+// console.log(ref);
+// ref.printItem();
+// ref.publisher = 'abc group';
+// console.log(ref.publisher);
+// console.log(ref.getID());
+
+// Task 05.02 05.03
+// const refBook: Encyclopedia = new Encyclopedia(1, 'Learn TypeScript', 2022, 2);
+// refBook.printItem();
+// console.log(refBook);
+// console.log(refBook.getID());
+// refBook.printCitation();
+
+// Task 05.04
+const favorirLibrarian: Librarian = new UniversityLibrarian();
+favorirLibrarian.name = 'Anna';
+favorirLibrarian.assistCustomer('Boris', 'Learn TypeSctipt');
+// favorirLibrarian.a = 2;
