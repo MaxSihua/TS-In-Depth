@@ -1,7 +1,9 @@
-import { ReferenceItem } from './classes';
+import { ReferenceItem, UL, RefBook } from './classes';
 import { Category } from './enums';
-import { calcTotalPages, getAllBooks, getBookAuthorByIndex, getBookTitlesByCategory} from './functions';
-import { Logger } from './interfaces';
+import { purge, printRefBook, calcTotalPages, getAllBooks, getBookAuthorByIndex, getBookTitlesByCategory, logBookTitles, logFirstAvailable, setDefaultConfig} from './functions';
+import { Librarian, Logger, TOptions } from './interfaces';
+import { Library } from './classes/library';
+
 showHello('greeting', 'TypeScript');
 
 function showHello(divName: string, name: string) {
@@ -9,25 +11,11 @@ function showHello(divName: string, name: string) {
     elt.innerText = `Hello from ${name}`;
 }
 
-class Encyclopedia extends ReferenceItem {
-    constructor(
-        id: number,
-        public title: string,
-        private yesr: number,
-        public edition: number
-    ) {
-        super(id, title, year);
-    }
+// ========================================================
 
-    override printItem(): void {
-        super.printItem();
-        console.log(`Edition: ${this.edition} (${this.year})`);
-    }
 
-    printCitation(): void {
-        console.log(`${this.title} - ${this.year}`);
-    }
-}
+
+
 // ========================================================
 // Task 02.01
 // console.log(getAllBooks());
@@ -94,8 +82,8 @@ class Encyclopedia extends ReferenceItem {
 
 // Task 04.02
 // const logDamage: DamageLogger = (reason: srting) => console.log(`Demaged: ${reason}`);
-const logDamage: Logger = (reason: srting) => console.log(`Demaged: ${reason}`);
-logDamage('missing bakc cover');
+// const logDamage: Logger = (reason: srting) => console.log(`Demaged: ${reason}`);
+// logDamage('missing bakc cover');
 
 // Task 04.03
 // const favorirAuthor: Author = {
@@ -138,13 +126,14 @@ logDamage('missing bakc cover');
 
 // Task 05.02 05.03
 // const refBook: Encyclopedia = new Encyclopedia(1, 'Learn TypeScript', 2022, 2);
+// const refBook: RefBook = new RefBook(1, 'Learn TypeScript', 2022, 2);
 // refBook.printItem();
 // console.log(refBook);
 // console.log(refBook.getID());
 // refBook.printCitation();
 
 // Task 05.04
-// const favorirLibrarian: Librarian = new UniversityLibrarian();
+// const favorirLibrarian: Librarian = new UL.UniversityLibrarian();
 // favorirLibrarian.name = 'Anna';
 // favorirLibrarian.assistCustomer('Boris', 'Learn TypeSctipt');
 // favorirLibrarian.a = 2;
@@ -165,3 +154,58 @@ logDamage('missing bakc cover');
 // console.log(options);
 // console.log(options2);
 // console.log(Object.is(options, options2));
+
+// Task 06.03, 06.04
+// const refBook: RefBook = new RefBook(1, 'Learn TypeScript', 2022, 2);
+// printRefBook(refBook);
+
+// const favorirLibrarian: Librarian = new UL.UniversityLibrarian();
+// printRefBook(favorirLibrarian);
+
+// Task 06.05
+const flag = true;
+
+// if(flag) {
+//     import('./classes')
+//         .then(o => {
+//             const reader = new o.Reader();
+//             reader.name = 'Anna';
+//             reader.take(getAllBooks()[0]);
+
+//             console.log(reader);
+//         })
+//         .catch(err => consol.log('err'))
+//         .finally(() => console.log('Completel'));
+// }
+
+// if(flag) {
+//     const o = await import('./classes');
+
+//     const reader = new o.Reader();
+//     reader.name = 'Anna';
+//     reader.take(getAllBooks()[0]);
+
+//     console.log(reader);
+// }
+
+// Task 06.06
+// let libraty: Library = new Library();
+// let libraty: Library = {
+//     id: 1,
+//     address: '',
+//     name: 'Anna'
+// };
+
+// Task 07.01
+
+const inventory: Book[] = [
+    { id: 10, title: 'The C Programming Language', author: 'K & R', available: true, category: Category.Software },
+    { id: 11, title: 'Code Complete', author: 'Steve McConnell', available: true, category: Category.Software },
+    { id: 12, title: '8-Bit Graphics with Cobol', author: 'A. B.', available: true, category: Category.Software },
+    { id: 13, title: 'Cool autoexec.bat Scripts!', author: 'C. D.', available: true, category: Category.Software }
+];
+
+const result1 = purge(inventory);
+console.log(result);
+const result2 = purge(1, 2, 3);
+console.log(result2);

@@ -3,6 +3,7 @@
 import { Category } from './enums';
 import { Book } from './interfaces';
 import { BookOrUndefined, BookPropertis } from './types';
+import RefBook from './encyclopedia';
 
 export function getAllBooks(): readonly Book[] {
     const books =<const> [
@@ -132,6 +133,12 @@ export function assertStringValue(data: any): void {
     }
 }
 
+export function assertRefBookInstance(condition: any): asserts condition {
+    if(!condition) {
+        throw new Error('It is not an instance of RefBook');
+    }
+}
+
 export function bookTitleTransform(title: any): string {
     assertStringValue(title);
     return[...title].reverse().join('');
@@ -151,4 +158,13 @@ export function setDefaultConfig(options: TOptions) {
     options.duration ??= 100;
     options.speed ??= 60;
 //     return options;
+}
+
+export function printRefBook(data: any): void {
+    assertRefBookInstance(data instanceof RefBook);
+    data.printItem();
+}
+
+export function purge(inventory: Array<T>): T[] {
+    return inventory.slice(2);
 }
