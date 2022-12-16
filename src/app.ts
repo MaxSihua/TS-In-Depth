@@ -1,7 +1,7 @@
-import { ReferenceItem, UL, RefBook } from './classes';
+import { ReferenceItem, UL, RefBook, Shelf } from './classes';
 import { Category } from './enums';
-import { purge, printRefBook, calcTotalPages, getAllBooks, getBookAuthorByIndex, getBookTitlesByCategory, logBookTitles, logFirstAvailable, setDefaultConfig} from './functions';
-import { Librarian, Logger, TOptions } from './interfaces';
+import { getObjectProperty ,purge, printRefBook, calcTotalPages, getAllBooks, getBookAuthorByIndex, getBookTitlesByCategory, logBookTitles, logFirstAvailable, setDefaultConfig} from './functions';
+import { Librarian, Logger, TOptions, Magazine } from './interfaces';
 import { Library } from './classes/library';
 
 showHello('greeting', 'TypeScript');
@@ -197,7 +197,6 @@ const flag = true;
 // };
 
 // Task 07.01
-
 const inventory: Book[] = [
     { id: 10, title: 'The C Programming Language', author: 'K & R', available: true, category: Category.Software },
     { id: 11, title: 'Code Complete', author: 'Steve McConnell', available: true, category: Category.Software },
@@ -205,7 +204,29 @@ const inventory: Book[] = [
     { id: 13, title: 'Cool autoexec.bat Scripts!', author: 'C. D.', available: true, category: Category.Software }
 ];
 
-const result1 = purge(inventory);
-console.log(result);
-const result2 = purge(1, 2, 3);
-console.log(result2);
+// const result1 = purge(inventory);
+// console.log(result);
+// const result2 = purge(1, 2, 3);
+// console.log(result2);
+
+// Task 07.02, 07.03
+// const bookShelf: Shelf<Book> = new Shelf<Book>();
+// const bookShelf = new Shelf<Book>();
+// inventory.forEach(book => bookShelf.add(book));
+// console.log(bookShelf.getFirst().title);
+
+const magazines: Magazine[] = [
+    { title: 'Programming Language Monthly', publisher: 'Code Mags' },
+    { title: 'Literary Fiction Quarterly', publisher: 'College Press' },
+    { title: 'Five Points', publisher: 'GSU' }
+];
+
+// const magazineShelf = new Shelf<Magazine>();
+// magazines.forEach(mag => magazineShelf.add(mag));
+// // console.log(magazineShelf.getFirst().title);
+
+// magazineShelf.printTitles();
+// console.log(magazineShelf.find('Five Points'));
+
+console.log(getObjectProperty(magazines[0], 'title'));
+console.log(getObjectProperty<Book, 'author' | 'title'>(inventory[1], 'author'));
