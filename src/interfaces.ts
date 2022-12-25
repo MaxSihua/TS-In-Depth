@@ -9,6 +9,18 @@ interface Person {
     email: string;
 }
 
+interface Book {
+    id: number;
+    title: string;
+    author: string;
+    available: boolean;
+    category: Category;
+    pages?: number;
+    // markDamage: (reason: srting) => void;
+    // markDamage? (reason: srting): void;
+    markDamage?: DamageLogger;
+}
+
 interface Author extends Person {
     numBooksPublished: number;
 }
