@@ -1,8 +1,8 @@
 export function sealed(param: string) {
-    return function(constructor: function): void {
+    return function(constructor: Function): void {
         console.log(`Sealing the constructor ${param}`);
-        consol.log(constructor);
-        consol.log(constructor.prototype);
+        console.log(constructor);
+        console.log(constructor.prototype);
 
         Object.seal(constructor);
         Object.seal(constructor.prototype);
@@ -74,7 +74,7 @@ export function logMethod(target: any, methodName: string, decorator: PropertyDe
         const indexes = proto[key];
 
         if(Array.isArray(indexes)) {
-            atgs.forEach((arg, index) => {
+            args.forEach((arg, index) => {
                 if (indexes.includes(index)) {
                     console.log(`Method: ${methodName}, ParamIndex: ${index}, ParamValue: ${arg}`);
                 }
@@ -88,3 +88,58 @@ export function logMethod(target: any, methodName: string, decorator: PropertyDe
 
 }
 
+function makeProperty<T>(
+    prototype: any,
+    propertyName: string,
+    getTransformer?: (value: any) => T,
+    setTransformer?: (value: any) => T
+) {
+    const values = new Map<any, T>();
+
+    Object.defineProperty(prototype, propertyName, {
+        set(firstValue: any) {
+            Object.defineProperty(this, propertyName, {
+                get() {
+                    if (getTransformer) {
+                        return getTransformer(values.get(this));
+                    } else {
+                        values.get(this);
+                    }
+                },
+                set(value: any) {
+                    if (setTransformer) {
+                        values.set(this, setTransformer(value));
+                    } else {
+                        values.set(this, value);
+                    }
+                },
+                enumerable: true
+            });
+            this[propertyName] = firstValue;
+        },
+        enumerable: true,
+        configurable: true
+    });
+}
+
+export function format(pref: string = 'Mr./Mrs.') {
+    return function(target: any, propName: string) {
+        makeProperty(target, propName, value => `${pref} ${value}`, value => value);
+    };
+}
+
+export function positiveInteger(target: any, propName: string, descriptor: PropertyDescriptor): PropertyDescriptor {
+    const originalSet = descriptor.set;
+
+    descriptor.set = function(value: number) {
+        if(value < 1 || !Number.isInteger(value)) {
+            throw new Error ('invalid value');
+        }
+
+        if(originalSet) {
+            originalSet.call(this.value);
+        }
+    };
+
+    return descriptor;
+}

@@ -1,7 +1,7 @@
 import { Category } from './enums';
 
 interface DamageLogger {
-    (reason: srting): void;
+    (reason: string): void;
 }
 
 interface Person {
@@ -49,4 +49,12 @@ interface ShelfItem {
     title: string;
 }
 
-export { Author, Magazine,ShelfItem, Book, Librarian, Person, TOptions, A, DamageLogger as Logger};
+interface LibMgrCallback {
+    (err: Error | null, titles: string[] | null): void;
+}
+
+interface CallBack<T> {
+    (err: Error | null, data: T | null ): void;
+}
+
+export { Author,LibMgrCallback, CallBack, Magazine, ShelfItem, Book, Librarian, Person, TOptions, A, DamageLogger as Logger};

@@ -3,7 +3,7 @@
 import { timeout } from '../decorators';
 
 abstract class ReferenceItem {
-    // title: srting;
+    // title: string;
     // year: number;
 
     // constructor(newTitle: string, newYear: number) {
@@ -14,7 +14,8 @@ abstract class ReferenceItem {
 
     #id: number;
 
-    private _publisher: srting;
+    private _publisher: string;
+    year: any;
 
     get publisher(): string {
         return this._publisher.toUpperCase();
@@ -39,7 +40,7 @@ abstract class ReferenceItem {
     printItem(): void {
         console.log(`${this.title} was puplished in ${this.year}`);
         console.log(ReferenceItem.department);
-        console.log(Object.getPrototypeOF(this).constructor.department);
+        console.log(Object.getPrototypeOf(this).constructor.department);
     }
 
     getID(): number {

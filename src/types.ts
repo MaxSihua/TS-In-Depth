@@ -1,4 +1,4 @@
-import { createCustomer } from './functions';
+import { createCusttomer, getBooksByCategoryPromise } from './functions';
 import { Author, Book, Person} from './interfaces';
 
 // export type Book = {
@@ -21,7 +21,7 @@ export type BookRequiredFields = Required<Book>;
 export type UpdateBook = Partial<Book>;
 export type AuthorWoEmail = Omit<Author, 'email'>;
 
-export type CreateCustomerFunctionType = typeof createCustomer;
+export type CreateCustomerFunctionType = typeof createCusttomer;
 
 export type fn =(a: string, b: number, c: boolean) => symbol;
 export type Param1<T> = T extends (a: infer R, b: number, c: boolean) => symbol ? R : never;
@@ -49,3 +49,8 @@ type RemoveProps<T extends object, TProps extends keyof T> = {
 
 type BookRequiredPropsType = RemoveProps<Book, BookOptionalProps>;
 type BookOptionalPropsType = RemoveProps<Book, BookRequiredProps>;
+
+export type Unpromisify<T> = T extends Promise<infer R> ? R : never;
+export type UnArray<T> = T extends Array<infer R> ? R : never;
+
+type pr = Unpromisify<ReturnType<typeof getBooksByCategoryPromise>>;

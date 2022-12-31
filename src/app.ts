@@ -1,6 +1,6 @@
 import { ReferenceItem, UL, RefBook, Shelf } from './classes';
 import { Category } from './enums';
-import { getObjectProperty ,purge, printRefBook, calcTotalPages, getAllBooks, getBookAuthorByIndex, getBookTitlesByCategory, logBookTitles, logFirstAvailable, setDefaultConfig} from './functions';
+import { getObjectProperty ,purge, printRefBook, calcTotalPages, getAllBooks, getBookAuthorByIndex, getBookTitlesByCategory, logBookTitles, logFirstAvailable, setDefaultConfig, getBooksByCategory, logCategorySearch, getBooksByCategoryPromise, logSearchResults} from './functions';
 import { Librarian, Logger, TOptions, Magazine } from './interfaces';
 import { Library } from './classes/library';
 
@@ -274,7 +274,46 @@ const flag = true;
 
 
 // Task 08.05
-const favorirLibrarian = new UL.UniversityLibrarian();
-console.log(favorirLibrarian);
-favorirLibrarian.name = 'Anna';
-favorirLibrarian.assistCustomer('Boris', 'Learn TypeScript');
+// const favorirLibrarian = new UL.UniversityLibrarian();
+// console.log(favorirLibrarian);
+// favorirLibrarian.name = 'Anna';
+// favorirLibrarian.assistCustomer('Boris', 'Learn TypeScript');
+
+// Task 08.06
+// const favorirLibrarian = new UL.UniversityLibrarian();
+// favorirLibrarian.name = 'Anna';
+// console.log(favorirLibrarian.name);
+// favorirLibrarian.assistCustomer('Boris', 'Learn TypeScript');
+
+// Task 08.07
+// const refBook: RefBook = new RefBook(1, 'Learn TypeScript', 2022, 2);
+// // refBook.copies = 10;
+// refBook.copies = -10;
+// console.log(refBook.copies);
+
+// Task 09.01
+// console.log('Begin');
+// getBooksByCategory(Category.JavaScript, logCategorySearch);
+// getBooksByCategory(Category.Software, logCategorySearch);
+// console.log('End');
+
+// Task 09.02
+// console.log('Begin');
+// getBooksByCategoryPromise(Category.JavaScript)
+//     .then(titles => {
+//         console.log(titles);
+//         return Promise.resolve(titles.length);
+//     })
+//     .then(n => console.log(n))
+//     .catch(reason => console.log(reason));
+// getBooksByCategoryPromise(Category.Software)
+//     .then(titles => console.log(titles))
+//     .catch(reason => console.log(reason));
+// console.log('End');
+
+
+// Task 09.03
+console.log('Begin');
+logSearchResults(Category.JavaScript);
+logSearchResults(Category.Software).catch(err => console.log(err));
+console.log('End');
